@@ -55,18 +55,81 @@
     Body:
 
     {
-        fileName: "smart-contract.sol",
-        dateUploaded: "2023-10-16"
-        status: "risky"
-        vulnerabilities: [
-            {
-                issue: "Smart contract is risky",
-                suggestion: "Fix it"
-            },
-            {
-                issue: "Smart contract is dangerous",
-                suggestion: "Remove it"
-            }
-        ]
+        status: 201,
+        message: "",
+        data: {
+            fileName: "smart-contract.sol",
+            dateUploaded: "2023-10-16",
+            status: "risky",
+            vulnerabilities: [
+                {
+                    issue: "Smart contract is risky",
+                    suggestion: "Fix it"
+                },
+                {
+                    issue: "Smart contract is dangerous",
+                    suggestion: "Remove it"
+                }
+            ]
+        }  
+    }
+    ```
+
+    - 404 Not Found
+     ```
+    Body:
+
+    {
+        status: 404,
+        message: "File not found!",
+        data: null
+    }
+    ```
+
+## API - Audit history
+1. Request
+    - GET: /audit-history
+
+    ```
+    Body:
+
+    {
+        search: "smart contract"
+    }
+    ```
+2. Response
+    - 200 OK
+
+    ```
+    Body:
+
+    {
+        status: 200,
+        message: "",
+        data: {
+            auditHistory: [
+                {
+                    fileName: "smart-contract1.sol",
+                    dateUploaded: "2023-10-16",
+                    status: "risky",
+                    vulnerabilities: [
+                        {
+                            issue: "Smart contract is risky",
+                            suggestion: "Fix it"
+                        },
+                        {
+                            issue: "Smart contract is dangerous",
+                            suggestion: "Remove it"
+                        }
+                    ]
+                },
+                {
+                    fileName: "smart-contract2.sol",
+                    dateUploaded: "2023-10-18",
+                    status: "safe",
+                    vulnerabilities: []
+                }
+            ]
+        }
     }
     ```
