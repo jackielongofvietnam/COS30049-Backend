@@ -7,7 +7,7 @@
     Body: 
 
     {
-        username: "JohnSmith",
+        userName: "JohnSmith",
         password: "123456789Abc"
     }
     ```
@@ -44,7 +44,8 @@
     Body:
 
     {
-        fileUrl: "https://file.scas.com/diles/smart-contract.sol"
+        fileName: "12_20155.69999999553_smart-contract.sol"
+        fileContent: "This is the content of sol file"
     }
     ```
 
