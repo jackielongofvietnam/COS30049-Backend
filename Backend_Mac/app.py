@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from modules.audit import auditSmartContract
 import certifi
 
 app = Flask(__name__)
@@ -31,6 +32,16 @@ def login():
     except Exception as e:
         return jsonify({'status': 'failure', 'message': 'Connec totion MongoDB server failed:'})
 
-    
+
+@app.route("/api/audit", methods=['GET'])
+def audit():
+    data = request.json
+    fileName = data.get('fileName')
+    fileContent = data.get('fileContent')
+
+    return auditSmartContract(fileName, fileContent)
+
+
+
 if __name__ == '__main__':
     app.run()
