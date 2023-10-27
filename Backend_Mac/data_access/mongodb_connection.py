@@ -6,6 +6,7 @@ import certifi
 def connectMongoDB():
     userName = 'user1'
     password = '31312'
+    database = 'Audit'
 
     #URL
     url = "mongodb+srv://"+userName+":"+password+"@testcluster.7phucdo.mongodb.net/?retryWrites=true&w=majority"
@@ -17,5 +18,6 @@ def connectMongoDB():
     try:
         client.Audit.command('ping')
         print("Successfully connected to MongoDB!")
+        return client[database]
     except Exception as e:
         print("Failed to connected to MongoDB!")
