@@ -1,4 +1,3 @@
-from datetime import timedelta
 from flask import Flask, session, request
 from flask_cors import CORS, cross_origin
 from modules.audit import audit_smart_contract
@@ -11,19 +10,19 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADER'] = 'Content-Type' 
 app.secret_key = 'smartcontractauditsystem123'
-database = connect_mongodb()
+db = connect_mongodb()
 
 
 @app.route("/api/login", methods=['POST'])
 @cross_origin(origins='*')
 def login():
-    if database == None:
-        return response(503, 'Database connection failed! Please try again later')
+    if db == None:
+        return response(503, 'db connection failed! Please try again later')
     data = request.json
     username = data.get('username')
     password = data.get('password')
 
-    return authenticate_user(database, username, password)
+    return authenticate_user(db, username, password)
 
 
 @app.route("/api/logout", methods=['POST'])
@@ -39,7 +38,7 @@ def audit():
     file_name = data.get('file_name')
     file_content = data.get('file_content')
 
-    return audit_smart_contract(file_name, file_content)
+    return audit_smart_contract(db, file_name, file_content)
 
 
 if __name__ == '__main__':
