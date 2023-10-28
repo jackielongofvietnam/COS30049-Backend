@@ -7,7 +7,7 @@
     Body: 
 
     {
-        userName: "JohnSmith",
+        username: "JohnSmith",
         password: "123456789Abc"
     }
     ```
@@ -44,8 +44,8 @@
     Body:
 
     {
-        fileName: "smart-contract.sol"
-        fileContent: "This is the content of sol file"
+        file_name: "smart-contract.sol"
+        file_content: "This is the content of sol file"
     }
     ```
 
@@ -59,8 +59,8 @@
         status: 201,
         message: "",
         data: {
-            fileName: "smart-contract.sol",
-            dateUploaded: "2023-10-16",
+            file_name: "smart-contract.sol",
+            date_uploaded: "2023-10-16",
             status: "risky",
             vulnerabilities: [
                 {
@@ -108,10 +108,10 @@
         status: 200,
         message: "",
         data: {
-            auditHistory: [
+            audit_history: [
                 {
-                    fileName: "smart-contract1.sol",
-                    dateUploaded: "2023-10-16",
+                    file_name: "smart-contract1.sol",
+                    date_uploaded: "2023-10-16",
                     status: "risky",
                     vulnerabilities: [
                         {
@@ -125,8 +125,8 @@
                     ]
                 },
                 {
-                    fileName: "smart-contract2.sol",
-                    dateUploaded: "2023-10-18",
+                    file_name: "smart-contract2.sol",
+                    date_uploaded: "2023-10-18",
                     status: "safe",
                     vulnerabilities: []
                 }

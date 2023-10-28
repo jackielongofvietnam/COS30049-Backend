@@ -3,13 +3,13 @@ from pymongo.server_api import ServerApi
 import certifi
 
 
-def connectMongoDB():
-    userName = 'admin'
+def connect_mongodb():
+    username = 'admin'
     password = '3svXKtSqRKd8pP8'
     database = 'Audit'
 
     #URI
-    uri = "mongodb+srv://"+userName+":"+password+"@testcluster.7phucdo.mongodb.net/?retryWrites=true&w=majority"
+    uri = "mongodb+srv://"+username+":"+password+"@testcluster.7phucdo.mongodb.net/?retryWrites=true&w=majority"
 
     # Create a new client and connect to the server
     client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())

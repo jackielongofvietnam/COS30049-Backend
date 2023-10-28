@@ -1,10 +1,10 @@
 from flask import session
 from utilities.response import response
 
-def authenticateUser(database, userName: str, password: str):
-    userData = database.Users.find_one({'userName': userName})
-    if userData and userData['password'] == password:
-        session['userId'] = str(userData['_id'])
+def authenticate_user(database, username, password):
+    user_data = database.Users.find_one({'userName': username})
+    if user_data and user_data['password'] == password:
+        session['user_id'] = str(user_data['_id'])
         session.permanent = True
         return response(200, "Login successful!")
     else:

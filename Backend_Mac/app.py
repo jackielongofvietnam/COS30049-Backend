@@ -1,9 +1,9 @@
 from datetime import timedelta
 from flask import Flask, session, request
 from flask_cors import CORS, cross_origin
-from modules.audit import auditSmartContract
-from modules.auth import authenticateUser
-from data_access.mongodb_connection import connectMongoDB
+from modules.audit import audit_smart_contract
+from modules.auth import authenticate_user
+from data_access.mongodb_connection import connect_mongodb
 from utilities.response import response
 from utilities.check_session import check_session
 
@@ -12,7 +12,7 @@ CORS(app)
 app.config['CORS_HEADER'] = 'Content-Type' 
 app.secret_key = 'smartcontractauditsystem123'
 app.permanent_session_lifetime = timedelta(minutes=30)
-database = connectMongoDB()
+database = connect_mongodb()
 
 
 @app.route("/api/login", methods=['POST'])
@@ -21,10 +21,10 @@ def login():
     if database == None:
         return response(503, 'Database connection failed! Please try again later')
     data = request.json
-    userName = data.get('userName')
+    username = data.get('username')
     password = data.get('password')
 
-    return authenticateUser(database, userName, password)
+    return authenticate_user(database, username, password)
 
 
 @app.route("/api/logout", methods=['POST'])
@@ -37,10 +37,10 @@ def logout():
 @check_session()
 def audit():
     data = request.json
-    fileName = data.get('fileName')
-    fileContent = data.get('fileContent')
+    file_name = data.get('file_name')
+    file_content = data.get('file_content')
 
-    return auditSmartContract(fileName, fileContent)
+    return audit_smart_contract(file_name, file_content)
 
 
 if __name__ == '__main__':
