@@ -2,8 +2,8 @@ from flask import session
 from utilities.response import response
 from data_access.users import find_user_by_username
 
-def authenticate_user(database, username, password):
-    user = find_user_by_username(database, username)
+def authenticate_user(db, username, password):
+    user = find_user_by_username(db, username)
 
     if user and user['password'] == password:
         session['user_id'] = str(user['_id'])
