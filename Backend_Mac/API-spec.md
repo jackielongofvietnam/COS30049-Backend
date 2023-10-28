@@ -44,7 +44,7 @@
     Body:
 
     {
-        fileName: "12_20155.69999999553_smart-contract.sol"
+        fileName: "smart-contract.sol"
         fileContent: "This is the content of sol file"
     }
     ```

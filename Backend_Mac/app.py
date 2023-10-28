@@ -5,12 +5,13 @@ from modules.audit import auditSmartContract
 from modules.auth import authenticateUser
 from data_access.mongodb_connection import connectMongoDB
 from utilities.response import response
+from utilities.check_session import check_session
 
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADER'] = 'Content-Type' 
 app.secret_key = 'smartcontractauditsystem123'
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = timedelta(minutes=30)
 database = connectMongoDB()
 
 
@@ -25,19 +26,21 @@ def login():
 
     return authenticateUser(database, userName, password)
 
+
 @app.route("/api/logout", methods=['POST'])
 def logout():
     session.clear()
     return response(200, "Logout successful!")
 
+
 @app.route("/api/audit", methods=['GET'])
+@check_session()
 def audit():
     data = request.json
     fileName = data.get('fileName')
     fileContent = data.get('fileContent')
 
     return auditSmartContract(fileName, fileContent)
-
 
 
 if __name__ == '__main__':
