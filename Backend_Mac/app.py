@@ -11,7 +11,6 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADER'] = 'Content-Type' 
 app.secret_key = 'smartcontractauditsystem123'
-app.permanent_session_lifetime = timedelta(minutes=30)
 database = connect_mongodb()
 
 

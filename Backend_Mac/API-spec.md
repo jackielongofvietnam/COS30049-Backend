@@ -19,7 +19,9 @@
     {
         status: 201,
         message: "Successful login",
-        data: null
+        data: {
+            "username": "long"
+        }
     }
     ```
 
