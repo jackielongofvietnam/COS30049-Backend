@@ -4,8 +4,8 @@ import certifi
 
 
 def connectMongoDB():
-    userName = 'user1'
-    password = '31312'
+    userName = 'admin'
+    password = '3svXKtSqRKd8pP8'
     database = 'Audit'
 
     #URL
@@ -21,3 +21,4 @@ def connectMongoDB():
         return client[database]
     except Exception as e:
         print("Failed to connected to MongoDB!")
+        print(e)
