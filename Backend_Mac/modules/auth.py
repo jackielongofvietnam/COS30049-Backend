@@ -1,11 +1,13 @@
-from flask import session, jsonify
+from flask import session
 from utilities.response import response
+from data_access.users import find_user_by_username
 
 def authenticate_user(database, username, password):
-    user_data = database.Users.find_one({'username': username})
-    if user_data and user_data['password'] == password:
-        session['user_id'] = str(user_data['_id'])
-        return_data = {"username": user_data['username']}
+    user = find_user_by_username(database, username)
+
+    if user and user['password'] == password:
+        session['user_id'] = str(user['_id'])
+        return_data = {"username": user['username']}
         return response(200, "Login successful!", return_data)
     else:
         return response(401, "Login failed! Wrong username or password")
