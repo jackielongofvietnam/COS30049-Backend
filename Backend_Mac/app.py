@@ -17,7 +17,7 @@ db = connect_mongodb()
 @cross_origin(origins='*')
 def login():
     if db == None:
-        return response(503, 'db connection failed! Please try again later')
+        return response(503, 'DB connection failed! Please try again later')
     data = request.json
     username = data.get('username')
     password = data.get('password')
@@ -34,6 +34,8 @@ def logout():
 @app.route("/api/audit", methods=['GET'])
 @check_session()
 def audit():
+    if db == None:
+        return response(503, 'DB connection failed! Please try again later')
     data = request.json
     file_name = data.get('file_name')
     file_content = data.get('file_content')
