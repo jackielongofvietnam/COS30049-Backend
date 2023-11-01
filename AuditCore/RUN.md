@@ -2,6 +2,7 @@
 
 ## 1. Activate the environment
 `cd AuditCore`
+
 `. ./SlitherEnv/bin/activate`
 
 ## 2. Setup 
