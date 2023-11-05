@@ -75,6 +75,7 @@ def execute_audit(file_path):
             
     return status, listOfvulnerabilities
 
+
 def audit_smart_contract(db, file_name, file_content):
     date_time, file_path = store_file(file_name, file_content)
 
@@ -89,6 +90,7 @@ def audit_smart_contract(db, file_name, file_content):
             "status": status,
             "vulnerabilities": vulnerabilities
         }
+    
     return response(201, "Success", audit_report)
 
 
