@@ -94,7 +94,7 @@
     - GET: api/audit-history
 
     ```json
-    Body:
+    Query-params:
 
     {
         "search": "smart contract"
