@@ -4,7 +4,29 @@ import datetime
 
 import pymongo
 
-def insert_audit_report(db, file_name, file_content, status, vulnerabilities):
+def insert_audit_report(db, file_name, file_path, date_time, status, vulnerabilities):
+    user_id = session['user_id']
+    
+    #Insert audit report to db
+    audit_report = {
+        "user_id": user_id,
+        "file_name": file_name,
+        "file_path": file_path,
+        "date_uploaded": date_time.strftime("%H:%M %d-%m-%Y"),
+        "status": status,
+        "vulnerabilities": vulnerabilities
+    }
+    try:       
+        db['Contracts'].insert_one(audit_report)
+        insert_result = True
+    except pymongo.errors.BulkWriteError as e:
+        print(e)
+        insert_result = False
+
+    return insert_result
+    
+
+def store_file(file_name, file_content):
     user_id = session['user_id']
     date_time = datetime.datetime.now()
     timestamp = date_time.timestamp()
@@ -20,23 +42,5 @@ def insert_audit_report(db, file_name, file_content, status, vulnerabilities):
             file.write(file_content)
     except:
         print('Failed to store smart contract!')
-    
-    #Insert audit report to db
-    audit_report = {
-        "user_id": user_id,
-        "file_name": file_name,
-        "file_path": file_path,
-        "date_uploaded": date_time.strftime("%H:%M %d-%m-%Y"),
-        "status": status,
-        "vulnerabilities": vulnerabilities
-    }
-    try:
-        db['Contracts'].insert_one(audit_report)
-        insert_result = True
-    except pymongo.errors.BulkWriteError as e:
-        print(e)
-        insert_result = False
 
-    return insert_result
-    
-
+    return date_time, file_path

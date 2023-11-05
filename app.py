@@ -31,7 +31,7 @@ def logout():
     return response(200, "Logout successful!")
 
 
-@app.route("/api/audit", methods=['GET'])
+@app.route("/api/audit", methods=['POST'])
 @check_session()
 def audit():
     if db == None:
