@@ -7,7 +7,7 @@
     Body: 
 
     {
-        "username": "JohnSmith",
+        "user_name": "JohnSmith",
         "password": "123456789Abc"
     }
     ```
@@ -20,7 +20,7 @@
         "status": 201,
         "message": "Successful login",
         "data": {
-            "username": "long"
+            "user_name": "long"
         }
     }
     ```
@@ -109,30 +109,28 @@
     {
         "status": 200,
         "message": "",
-        "data": {
-            "audit_history": [
-                {
-                    "file_name": "smart-contract1.sol",
-                    "date_uploaded": "2023-10-16",
-                    "status": "risky",
-                    "vulnerabilities": [
-                        {
-                            "issue": "Smart contract is risky",
-                            "suggestion": "Fix it"
-                        },
-                        {
-                            "issue": "Smart contract is dangerous",
-                            "suggestion": "Remove it"
-                        }
-                    ]
-                },
-                {
-                    "file_name": "smart-contract2.sol",
-                    "date_uploaded": "2023-10-18",
-                    "status": "safe",
-                    "vulnerabilities": []
-                }
-            ]
-        }
+        "data": [
+            {
+                "file_name": "smart-contract1.sol",
+                "date_uploaded": "2023-10-16",
+                "status": "risky",
+                "vulnerabilities": [
+                    {
+                        "issue": "Smart contract is risky",
+                        "suggestion": "Fix it"
+                    },
+                    {
+                        "issue": "Smart contract is dangerous",
+                        "suggestion": "Remove it"
+                    }
+                ]
+            },
+            {
+                "file_name": "smart-contract2.sol",
+                "date_uploaded": "2023-10-18",
+                "status": "safe",
+                "vulnerabilities": []
+            }
+        ]
     }
     ```
