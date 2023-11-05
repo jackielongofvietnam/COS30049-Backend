@@ -3,7 +3,7 @@ from data_access.contracts import insert_audit_report, store_file
 import subprocess
 
 def find_solution(sectionName):
-    filePath = "../slither/Detector-Documentation.md"
+    filePath = "slither/Detector-Documentation.md"
     SectionFormat = sectionName.replace("-", " ")
     SectionLineInMarkDown = "## " + SectionFormat
     with open(filePath, 'r') as file:
@@ -33,23 +33,15 @@ def find_solution(sectionName):
     return "Currently can not find out the suggestions yet"
                           
 
-'''The file path MUST BE like this:
-../file_storage/killbilly.sol
-'''
 def execute_audit(file_path):
     ## fileName string must include .sol extention
-    file_path = "../file_storage/killbilly.sol"
     print(file_path)
     listOfvulnerabilities = []
 
     try:
-        command = "cd ../slither\nslither " + file_path
-        result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
-        print(command)
+        command = "slither " + file_path
+        subprocess.run(command, shell=True, check=True, capture_output=True, text=True)   
     except subprocess.CalledProcessError as e:
-        #print("Command execution failed.")
-        #print("Error message:", e.stderr)
-        #print(type(e.stderr))
         output = e.stderr
         lines = output.split('\n')
         isRiskLine = False
@@ -62,8 +54,8 @@ def execute_audit(file_path):
                 Recommendation = find_solution(line[73:])
                 
                 Issue = {
-                    "Issue": issueName,
-                    "Suggestion": Recommendation
+                    "issue": issueName,
+                    "suggestion": Recommendation
                 }
                 listOfvulnerabilities.append(Issue)
                 issueName = ""
@@ -72,8 +64,14 @@ def execute_audit(file_path):
             if isRiskLine:
                 issueName += line
                 issueName += "\n"
-
-    status = 'risky' if listOfvulnerabilities else 'safe'     
+    
+    if listOfvulnerabilities:
+        status = 'risky'
+        for vulnerability in listOfvulnerabilities:
+            vulnerability['issue'] = vulnerability['issue'].strip()
+            vulnerability['suggestion'] = vulnerability['suggestion'].strip()
+    else:
+        status = 'safe'    
             
     return status, listOfvulnerabilities
 
@@ -82,12 +80,15 @@ def audit_smart_contract(db, file_name, file_content):
 
     #Audit logic goes here
     status, vulnerabilities = execute_audit(file_path)
-    print(vulnerabilities)
 
     #Push audit result to db and store smart contract file
-    audit_report = insert_audit_report(db, file_name, file_path, date_time, status, vulnerabilities)
+    insert_audit_report(db, file_name, file_path, date_time, status, vulnerabilities)
+    audit_report = {
+            "file_name": file_name,
+            "date_uploaded": date_time,
+            "status": status,
+            "vulnerabilities": vulnerabilities
+        }
+    return response(201, "Success", audit_report)
 
-    result = audit_report
-
-    return response(201, "Success", result)
 

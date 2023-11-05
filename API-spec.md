@@ -40,7 +40,7 @@
 ## API - Audit logic
 
 1. Request
-    - GET: api/audit
+    - POST: api/audit
 
     ```json
     Body:
