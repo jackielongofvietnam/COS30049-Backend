@@ -62,7 +62,7 @@
         "message": "",
         "data": {
             "file_name": "smart-contract.sol",
-            "date_uploaded": "2023-10-16",
+            "date_uploaded": "16:19 05-11-2023",
             "status": "risky",
             "vulnerabilities": [
                 {
@@ -112,7 +112,8 @@
         "data": [
             {
                 "file_name": "smart-contract1.sol",
-                "date_uploaded": "2023-10-16",
+                "file_path": "file_storage/smart-contract1.sol",
+                "date_uploaded": "16:19 05-11-2023",
                 "status": "risky",
                 "vulnerabilities": [
                     {
@@ -127,6 +128,7 @@
             },
             {
                 "file_name": "smart-contract2.sol",
+                "file_path": "file_storage/smart-contract2.sol",
                 "date_uploaded": "2023-10-18",
                 "status": "safe",
                 "vulnerabilities": []
