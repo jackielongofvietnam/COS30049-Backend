@@ -19,10 +19,10 @@ def login():
     if db == None:
         return response(503, 'DB connection failed! Please try again later')
     data = request.json
-    username = data.get('username')
+    user_name = data.get('user_name')
     password = data.get('password')
 
-    return authenticate_user(db, username, password)
+    return authenticate_user(db, user_name, password)
 
 
 @app.route("/api/logout", methods=['POST'])
