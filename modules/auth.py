@@ -7,6 +7,7 @@ def authenticate_user(db, user_name, password):
 
     if user and user['password'] == password:
         session['user_id'] = str(user['_id'])
+        print(session)
         return_data = {"user_name": user['user_name']}
         return response(201, "Login successful!", return_data)
     else:

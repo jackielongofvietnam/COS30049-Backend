@@ -35,7 +35,6 @@ def find_solution(sectionName):
 
 def execute_audit(file_path):
     ## fileName string must include .sol extention
-    print(file_path)
     listOfvulnerabilities = []
 
     try:
