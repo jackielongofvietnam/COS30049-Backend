@@ -20,7 +20,7 @@
         "status": 201,
         "message": "Successful login",
         "data": {
-            "user_name": "long"
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUzYzYxNjE3Y2E2NGQyNDRkMTU0N2YxIn0.hQu15v6vgleTkBv9OYl8DWXCNazTcFhf6dhqQT_kq88"
         }
     }
     ```
@@ -31,7 +31,18 @@
 
     {
         "status": 401,
-        "message": "Login failed! Wrong username or password",
+        "message": "No token found!",
+        "data": null
+    }
+    ```
+
+    - 403 Forbidden
+    ```json
+    Body:
+
+    {
+        "status": 403,
+        "message": "Invalid token!",
         "data": null
     }
     ```
