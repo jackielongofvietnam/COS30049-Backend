@@ -5,12 +5,13 @@ from modules.audit_history import search_audit_history
 from modules.auth import authenticate_user
 from data_access.mongodb_connection import connect_mongodb
 from utilities.response import response
-from utilities.check_session import check_session
+from utilities.check_token import check_token
+
 
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADER'] = 'Content-Type' 
-app.secret_key = 'smartcontractauditsystem123'
+app.config['SECRET_KEY'] = 'smartcontractauditsystem123'
 db = connect_mongodb()
 
 
@@ -23,18 +24,13 @@ def login():
     user_name = data.get('user_name')
     password = data.get('password')
 
-    return authenticate_user(db, user_name, password)
-
-
-@app.route("/api/logout", methods=['POST'])
-def logout():
-    session.clear()
-    return response(200, "Logout successful!")
+    return authenticate_user(db, app, user_name, password)
 
 
 @app.route("/api/audit", methods=['POST'])
-#@check_session()
+@check_token(app)
 def audit():
+    
     if db == None:
         return response(503, 'DB connection failed! Please try again later')
     data = request.json
@@ -45,8 +41,8 @@ def audit():
 
 
 @app.route("/api/audit-history", methods=['GET'])
-#@check_session()
-def audit_history():
+@check_token(app)
+def audit_history():    
     if db == None:
         return response(503, 'DB connection failed! Please try again later')
     data = request.args

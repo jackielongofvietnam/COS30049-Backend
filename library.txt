@@ -4,6 +4,7 @@ pip install Flask
 pip install flask_cors
 pip install pymongo
 pip install certifi
+pip install PyJWT
 
 
 
