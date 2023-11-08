@@ -47,8 +47,11 @@ def store_file(file_name, file_content):
     return date_time, file_path
 
 
-def get_audit_history_by_user_id(db):
+def get_audit_history_by_user_id(db, search):
     #user_id = session['user_id']
-    result = db['Contracts'].find({}, {"_id": 0})
+    if search:
+        result = db['Contracts'].find({"file_name": {"$regex": search}}, {"_id": 0})
+    else:
+        result = db['Contracts'].find({}, {"_id": 0})
     audit_history = [doc for doc in result]
     return audit_history

@@ -1,4 +1,4 @@
-from flask import Flask, session, request
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from modules.audit import audit_smart_contract
 from modules.audit_history import search_audit_history
