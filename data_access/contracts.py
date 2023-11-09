@@ -1,15 +1,13 @@
 import os
-from flask import session
+from flask import request
 import datetime
 
 import pymongo
 
-def insert_audit_report(db, file_name, file_path, date_time, status, vulnerabilities):
-    #user_id = session['user_id']
-    
+def insert_audit_report(db, user_id, file_name, file_path, date_time, status, vulnerabilities):
     #Insert audit report to db
     audit_report = {
-        #"user_id": user_id,
+        "user_id": user_id,
         "file_name": file_name,
         "file_path": file_path,
         "date_uploaded": date_time.strftime("%H:%M %d-%m-%Y"),
@@ -26,13 +24,12 @@ def insert_audit_report(db, file_name, file_path, date_time, status, vulnerabili
     return insert_result
     
 
-def store_file(file_name, file_content):
-    #user_id = session['user_id']
+def store_file(user_id, file_name, file_content):
     date_time = datetime.datetime.now()
     timestamp = date_time.timestamp()
     dir = "file_storage"
-    #stored_file_name = f'{user_id}_{timestamp}_{file_name}'
-    stored_file_name = f'{timestamp}_{file_name}'
+    stored_file_name = f'{user_id}_{timestamp}_{file_name}'
+    # stored_file_name = f'{timestamp}_{file_name}'
     file_path = dir + '/' + stored_file_name
     
     #Store smart contract file
@@ -47,11 +44,10 @@ def store_file(file_name, file_content):
     return date_time, file_path
 
 
-def get_audit_history_by_user_id(db, search):
-    #user_id = session['user_id']
+def get_audit_history_by_user_id(db, user_id, search):
     if search:
-        result = db['Contracts'].find({"file_name": {"$regex": search}}, {"_id": 0})
+        result = db['Contracts'].find({"user_id": user_id, "file_name": {"$regex": search}}, {"_id": 0})
     else:
-        result = db['Contracts'].find({}, {"_id": 0})
+        result = db['Contracts'].find({"user_id": user_id}, {"_id": 0})
     audit_history = [doc for doc in result]
     return audit_history

@@ -75,14 +75,14 @@ def execute_audit(file_path):
     return status, listOfvulnerabilities
 
 
-def audit_smart_contract(db, file_name, file_content):
-    date_time, file_path = store_file(file_name, file_content)
+def audit_smart_contract(db, user_id, file_name, file_content):
+    date_time, file_path = store_file(user_id, file_name, file_content)
 
     #Audit logic goes here
     status, vulnerabilities = execute_audit(file_path)
 
     #Push audit result to db and store smart contract file
-    insert_audit_report(db, file_name, file_path, date_time, status, vulnerabilities)
+    insert_audit_report(db, user_id, file_name, file_path, date_time, status, vulnerabilities)
     audit_report = {
             "file_name": file_name,
             "date_uploaded": date_time,
