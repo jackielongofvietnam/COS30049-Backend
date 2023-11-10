@@ -38,7 +38,7 @@ def execute_audit(file_path):
     listOfvulnerabilities = []
 
     try:
-        command = "slither " + file_path
+        command = "solc-select use 0.5.0\nslither " + file_path
         subprocess.run(command, shell=True, check=True, capture_output=True, text=True)   
     except subprocess.CalledProcessError as e:
         output = e.stderr
