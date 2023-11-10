@@ -1,5 +1,4 @@
 import os
-from flask import request
 import datetime
 
 import pymongo
@@ -29,7 +28,6 @@ def store_file(user_id, file_name, file_content):
     timestamp = date_time.timestamp()
     dir = "file_storage"
     stored_file_name = f'{user_id}_{timestamp}_{file_name}'
-    # stored_file_name = f'{timestamp}_{file_name}'
     file_path = dir + '/' + stored_file_name
     
     #Store smart contract file
