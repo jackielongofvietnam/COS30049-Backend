@@ -1,4 +1,4 @@
-#!/Users/tamvo/Desktop/COS30049/COS30049-Backend/.venv_mac/bin/python3
+#!/Users/tamvo/Desktop/COS30049/COS30049-Backend/.venv_mac/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
