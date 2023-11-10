@@ -64,9 +64,11 @@ def execute_audit(file_path):
                 issueName += line
                 issueName += "\n"
     
+    # Determine whether the smart contract is safe or risky
     if listOfvulnerabilities:
         status = 'risky'
         for vulnerability in listOfvulnerabilities:
+            # Remove break line in the 2 ends of the string
             vulnerability['issue'] = vulnerability['issue'].strip()
             vulnerability['suggestion'] = vulnerability['suggestion'].strip()
     else:
@@ -76,12 +78,13 @@ def execute_audit(file_path):
 
 
 def audit_smart_contract(db, user_id, file_name, file_content):
+    # Store smart contract file
     date_time, file_path = store_file(user_id, file_name, file_content)
 
-    #Audit logic goes here
+    # Audit logic goes here
     status, vulnerabilities = execute_audit(file_path)
 
-    #Push audit result to db and store smart contract file
+    # Push audit result to db
     insert_audit_report(db, user_id, file_name, file_path, date_time, status, vulnerabilities)
     audit_report = {
             "file_name": file_name,
