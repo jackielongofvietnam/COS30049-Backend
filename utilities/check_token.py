@@ -4,6 +4,10 @@ from utilities.response import response
 import jwt
     
 def check_token(app):
+    """
+    A decorator that authenticates the JWT token of every Requests entering endpoint and block any traffic having no token or invalid token
+    """
+    
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):

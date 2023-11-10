@@ -49,5 +49,8 @@ def get_audit_history_by_user_id(db, user_id, search):
         result = db['Contracts'].find({"user_id": user_id, "file_name": {"$regex": search}}, {"_id": 0})
     else:
         result = db['Contracts'].find({"user_id": user_id}, {"_id": 0})
+    
+    # Create a audit history list from the query result
     audit_history = [doc for doc in result]
+
     return audit_history
