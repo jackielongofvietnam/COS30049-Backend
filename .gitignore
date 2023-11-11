@@ -1,2 +1,4 @@
 **/__pycache__/
+/utilities/__pycache__/
 .venv_window
+.venv_mac

@@ -1,0 +1,11 @@
+python3 -m venv .venv_mac
+. .venv_mac/bin/activate
+pip install Flask
+pip install flask_cors
+pip install pymongo
+pip install certifi
+pip install PyJWT
+pip install slither-analyzer
+pip install solc-select
+solc-select install 0.5.0
+solc-select use 0.5.0
