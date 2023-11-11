@@ -1,4 +1,5 @@
 **/__pycache__/
-/utilities/__pycache__/
+utilities/__pycache__
 .venv_window
 .venv_mac
+file_storage
