@@ -1,10 +1,9 @@
 import os
 import datetime
-
 import pymongo
 
 def insert_audit_report(db, user_id, file_name, file_path, date_time, status, vulnerabilities):
-    #Insert audit report to db
+    # Insert audit report to db
     audit_report = {
         "user_id": user_id,
         "file_name": file_name,
@@ -27,10 +26,12 @@ def store_file(user_id, file_name, file_content):
     date_time = datetime.datetime.now()
     timestamp = date_time.timestamp()
     dir = "file_storage"
+
+    # Combine user id and timestamp to file name to ensure its uniqueness
     stored_file_name = f'{user_id}_{timestamp}_{file_name}'
     file_path = dir + '/' + stored_file_name
     
-    #Store smart contract file
+    # Store smart contract file
     if not os.path.exists(dir):      
         os.makedirs(dir)
     try:  

@@ -2,9 +2,9 @@ from utilities.response import response
 from data_access.contracts import insert_audit_report, store_file
 import subprocess
 
-def find_solution(sectionName):
+def find_solution(section_name):
     ## The function takes a string sectionName (error name)
-    filePath = "slither/Detector-Documentation.md"
+    file_path = "slither/Detector-Documentation.md"
     '''Detector-Documentation.md is a markdown file with this structure:
 # Public Detectors
 
@@ -32,32 +32,32 @@ List of public detectors
     ## We need to find the line "## Error n" in the markdown file
     ## and find the subsection ### Recommendation
     ## Formating the name
-    SectionFormat = sectionName.replace("-", " ")
-    SectionLineInMarkDown = "## " + SectionFormat
+    section_format = section_name.replace("-", " ")
+    section_line_in_mark_down = "## " + section_format
     
     ## Open file "slither/Detector-Documentation.md"
-    with open(filePath, 'r') as file:
+    with open(file_path, 'r') as file:
         lines = file.readlines()
-        foundOutSection = False
-        foundOutRecommendation = False
+        found_out_section = False
+        found_out_recommendation = False
         suggestions = ""
         
         ## Traversing every single line
         for line in lines:
             
             # if we found out the section
-            if line.lower().startswith(SectionLineInMarkDown):
-                foundOutSection = True
+            if line.lower().startswith(section_line_in_mark_down):
+                found_out_section = True
                 continue
             
-            if foundOutSection and line.startswith("### Recommendation"):
-                foundOutRecommendation = True
+            if found_out_section and line.startswith("### Recommendation"):
+                found_out_recommendation = True
                 continue
             
-            if foundOutRecommendation and line.startswith("## "):
+            if found_out_recommendation and line.startswith("## "):
                 return suggestions
             
-            if foundOutRecommendation:
+            if found_out_recommendation:
                 suggestions += line
                 suggestions += "\n"
                   
@@ -66,7 +66,7 @@ List of public detectors
 
 def execute_audit(file_path):
     ## fileName string must include .sol extention
-    listOfvulnerabilities = []
+    list_of_vulnerabilities = []
 
     try:
         ## Run the command to select the solc version
@@ -74,8 +74,8 @@ def execute_audit(file_path):
         subprocess.run(solc_select_command, shell=True, check=True, capture_output=True, text=True)
         
         ## Using Slither commandline to audit the file
-        auditCommand = "slither " + file_path
-        subprocess.run(auditCommand, shell=True, check=True, capture_output=True, text=True)
+        audit_command = "slither " + file_path
+        subprocess.run(audit_command, shell=True, check=True, capture_output=True, text=True)
         
         ## If the file is safe, then nothing happens
         ## but if there is an error, the terminal will raise the error   
@@ -98,15 +98,15 @@ def execute_audit(file_path):
         
         ## Setting isRiskLine as False by default, 
         # a Risk Line always begins with 'INFO:Detectors:'
-        isRiskLine = False
-        issueName = ""
+        is_risk_line = False
+        issue_name = ""
         
         ## Traverse each line
         for line in lines:
             ## if the current line starts with 'INFO:Detectors:', 
             # setting isRiskLine to true, then check the next line
             if line.startswith('INFO:Detectors:'):
-                isRiskLine = True
+                is_risk_line = True
                 continue
             
             ## if the current line starts with 'Reference'
@@ -117,41 +117,41 @@ def execute_audit(file_path):
                 # and is followed by the name of the error, all we need
                 # to do is getting the name of current error 
                 # and call function "find_solution()"
-                Recommendation = find_solution(line[73:])
+                recommendation = find_solution(line[73:])
                 
                 ## The function "find_solution" always returns a recommendation (string)
                 # for the current error 
                 
                 ## Then, create an "Issue" object to store issue name and recommendation
                 Issue = {
-                    "issue": issueName,
-                    "suggestion": Recommendation
+                    "issue": issue_name,
+                    "suggestion": recommendation
                 }
                 
                 ## appending the "Issue" object to the list of vulnerabilities
-                listOfvulnerabilities.append(Issue)
+                list_of_vulnerabilities.append(Issue)
                 
                 ## Reset issueName and isRiskLine
-                issueName = ""
-                isRiskLine = False
+                issue_name = ""
+                is_risk_line = False
             
             ## If the current line is riskline, 
             # then append it to the issueName string 
-            if isRiskLine:
-                issueName += line
-                issueName += "\n"
+            if is_risk_line:
+                issue_name += line
+                issue_name += "\n"
     
     # Determine whether the smart contract is safe or risky
-    if listOfvulnerabilities:
+    if list_of_vulnerabilities:
         status = 'risky'
-        for vulnerability in listOfvulnerabilities:
+        for vulnerability in list_of_vulnerabilities:
             # Remove break line in the 2 ends of the string
             vulnerability['issue'] = vulnerability['issue'].strip()
             vulnerability['suggestion'] = vulnerability['suggestion'].strip()
     else:
         status = 'safe'    
             
-    return status, listOfvulnerabilities
+    return status, list_of_vulnerabilities
 
 
 def audit_smart_contract(db, user_id, file_name, file_content):
